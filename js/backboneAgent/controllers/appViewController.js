@@ -20,7 +20,7 @@ Modules.set('controllers.appViewController', function() {
             // on new instance
 
             var me = this;
-                
+
             var viewInfo = appViewsInfo.register(view, {
                 "component_name": null, // string
                 "component_modelIndex": null, // int
@@ -42,7 +42,8 @@ Modules.set('controllers.appViewController', function() {
                         viewSelector += "."+view.el.className.replace(/ /g, '.');
                     }
                 }
-                var componentName = view.constructor.name || null;
+
+                var componentName = view.namespace || view.constructor.name || null;
                 var componentNameDetails = viewSelector || null;
                 if (componentName && componentNameDetails) {
                     componentName += " - " + componentNameDetails;
@@ -85,7 +86,7 @@ Modules.set('controllers.appViewController', function() {
                 if (events === undefined) {
                     // delegateEvents internally uses this.events when called without arguments,
                     // not enabling the changing of the input,
-                    // hence in this case this behaviour is anticipated by using this.events as input. 
+                    // hence in this case this behaviour is anticipated by using this.events as input.
                     // (this.events can also be a function that returns the hash)
                     events = (typeof this.events == "function") ? this.events() : this.events;
                 }
@@ -113,7 +114,7 @@ Modules.set('controllers.appViewController', function() {
                                 // event is the jQuery event
 
                                 viewInfo.actions.register({
-                                    "type": "Page event handling", 
+                                    "type": "Page event handling",
                                     "name": eventType,
                                     "dataKind": "jQuery Event"
                                 }, event);
@@ -125,7 +126,7 @@ Modules.set('controllers.appViewController', function() {
                     }
                 }
 
-                // edit the arguments 
+                // edit the arguments
                 // (it's not enough to set arguments[0] since doesn't work in strict mode)
                 var argumentsArray = Array.prototype.slice.call(arguments);
                 argumentsArray[0] = events;
